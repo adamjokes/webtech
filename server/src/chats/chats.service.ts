@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
+import { Message } from './entities/chat.entity';
 
 @Injectable()
 export class ChatsService {
+  constructor(
+    @InjectRepository(Message)
+    private messageRepository: Repository<Message>
+
+  ) {}
   create(createChatDto: CreateChatDto) {
-    return 'This action adds a new chat';
+    return this.messageRepository.save(createChatDto)
   }
 
   findAll() {
-    return `This action returns all chats`;
+    return this.messageRepository.find()
+  }
+  findByRoom(roomId: string){
+    return this.messageRepository.find({room:roomId})
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chat`;
+  findOne(id: string) {
+    return this.messageRepository.findOne(id)
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
-    return `This action updates a #${id} chat`;
+  update(id: string, updateChatDto: UpdateChatDto) {
+    return this.messageRepository.createQueryBuilder('chat')
+    .update()
+    .where('id = :id', { id })
+    .set(updateChatDto)
+    .execute();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} chat`;
+  remove(id: string) {
+    return this.messageRepository
+    .createQueryBuilder()
+    .delete()
+    .where('id = :id', { id })
+    .execute();
   }
 }

@@ -1,0 +1,57 @@
+version: "3.3"
+services:
+  # nginx:
+  #   depends_on:
+  #     - phpmyadmin
+  #     - php
+  #   restart: always
+  #   hostname: nginx
+  #   build: 
+  #     context: ./nginx
+  #     dockerfile: Dockerfile
+  #   container_name: nginx
+  #   image: "sleepinglotus/nginx"
+  #   volumes: 
+  #     - /var/digital_crusaider:/var/digital_crusaider
+  #   ports:
+  #     - "80:80"
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    hostname: digitalcrusader.club
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+       MYSQL_ROOT_PASSWORD: webtech123
+       PMA_HOST: db
+       PMA_ARBITRARY: 1
+       PMA_PORT: 3306
+       PMA_ABSOLUTE_URI: https://digitalcrusader.club/phpmyadmin/
+  # php:
+  #   image: php:fpm
+  #   depends_on:
+  #     - db
+  # slim:
+  #         image: php:7-alpine
+  #         working_dir: /var/www
+  #         command: php -S 0.0.0.0:8080 -it public
+  #         environment:
+  #                 docker: "true"
+  #         ports:
+  #            - 8080:8080
+  #         volumes:
+  #             - /var/digital_crusaider/app:/var/www
+  #             - /var/digital_crusaider/app/logs:/var/www/logs
+  db:
+    image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: webtech123
+      MYSQL_DATABASE: dev_profile
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - app-db-data:/var/lib/mysql
+volumes:
+  app-db-data:

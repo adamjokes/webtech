@@ -1,8 +1,29 @@
+import { useEffect, useState } from "react"
+import { Room as IRoom,getRooms } from "../../services/index"
 import { Room } from "./Room"
 import { SearchField } from "./SearchField"
 
 
-export const Rooms = () => {
+export const Rooms = ({setCurrentRoomId}) => {
+    const [rooms, setRooms] = useState([]as IRoom[])
+    useEffect(() => {
+       getRooms().then(response =>{
+           const rooms =  response.data
+           setRooms(rooms)
+       }) 
+    }, [])
+
+    const RenderRooms = () => {
+        console.log(rooms);
+        
+        return (
+            <>
+            {rooms.map(room =>{
+                return <Room {...room} key={room.id}/>    
+            })}
+            </>
+        )
+    }
 
     return (
         <div className="inbox_people">
@@ -15,9 +36,7 @@ export const Rooms = () => {
             </div>
 
             <div id='inbox' className="inbox_chat">
-                <Room/>
-                <Room/>
-                <Room/>
+                <RenderRooms/>
             </div>
         </div>
     )

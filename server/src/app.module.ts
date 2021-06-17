@@ -8,7 +8,7 @@ import { Message } from './chats/entities/message.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mariadb',
-      host: 'localhost',
+      host: 'db',
       port: 3306,
       username: 'root',
       password: 'webtech123',

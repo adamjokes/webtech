@@ -21,11 +21,11 @@ export class RoomsService {
   }
   
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.roomRepository.findOne(id)
   }
 
-  update(id: string, updateChatDto: UpdateRoomDto) {
+  update(id: number, updateChatDto: UpdateRoomDto) {
     return this.roomRepository.createQueryBuilder('room')
     .update()
     .where('id = :id', { id })
@@ -33,7 +33,7 @@ export class RoomsService {
     .execute();
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.roomRepository
     .createQueryBuilder()
     .delete()

@@ -1,9 +1,9 @@
-import { Message } from 'src/chats/entities/chat.entity';
+import { Message } from '../../chats/entities/message.entity';
 import { Entity, Column, PrimaryGeneratedColumn,OneToMany } from 'typeorm';
 @Entity()
 export class Room {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
   
     @Column()
     name: string;
@@ -12,12 +12,13 @@ export class Room {
     image: string;
   
 
-    @Column({ default:new Date()})
+    @Column({ type:'datetime', nullable: true})
     created_at: Date;
 
     @OneToMany(() => Message, (message) => message.room, {
         cascade: true,
         nullable: true,
+       
       })
       messages: Message[];
 }

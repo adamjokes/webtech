@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-import { Message } from './entities/chat.entity';
+import { Message } from './entities/message.entity';
 
 @Injectable()
 export class ChatsService {
@@ -13,29 +13,29 @@ export class ChatsService {
 
   ) {}
   create(createChatDto: CreateChatDto) {
-    return this.messageRepository.save(createChatDto)
+    return this.messageRepository.save(createChatDto as any)
   }
 
   findAll() {
     return this.messageRepository.find()
   }
-  findByRoom(roomId: string){
-    return this.messageRepository.find({room:roomId})
+  findByRoom(roomId: number){
+    return this.messageRepository.find({room:roomId as any})
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.messageRepository.findOne(id)
   }
 
-  update(id: string, updateChatDto: UpdateChatDto) {
+  update(id: number, updateChatDto: UpdateChatDto) {
     return this.messageRepository.createQueryBuilder('chat')
     .update()
     .where('id = :id', { id })
-    .set(updateChatDto)
+    .set(updateChatDto as any)
     .execute();
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.messageRepository
     .createQueryBuilder()
     .delete()

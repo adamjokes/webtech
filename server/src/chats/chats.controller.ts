@@ -18,17 +18,17 @@ export class ChatsController {
   }
 
   @Get(':id')
-  findByRoom(@Param('id') id: string) {
+  findByRoom(@Param('id') id: number) {
     return this.chatsService.findByRoom(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChatDto: UpdateChatDto) {
+  update(@Param('id') id: number, @Body() updateChatDto: UpdateChatDto) {
     return this.chatsService.update(id, updateChatDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.chatsService.remove(id);
   }
 }

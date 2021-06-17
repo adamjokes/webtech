@@ -1,9 +1,9 @@
-import { Room } from 'src/rooms/entities/room.entity';
+import { Room } from '../../rooms/entities/room.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 @Entity()
 export class Message {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
   
     @Column()
     ip_address: string;
@@ -12,11 +12,12 @@ export class Message {
     input: string;
   
 
-    @Column({ default:new Date()})
+    @Column({ type:'datetime', nullable:true})
     created_at: Date;
 
     @ManyToOne(() => Room, (room) => room.messages, {
         onDelete: 'CASCADE',
+        eager:true
       })
-      room: string;
+      room: Room;
 }

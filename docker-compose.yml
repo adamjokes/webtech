@@ -1,29 +1,25 @@
-version: "3.3"
+version: "3.7"
 services:
-  # nginx:
-  #   depends_on:
-  #     - phpmyadmin
-  #     - php
-  #   restart: always
-  #   hostname: nginx
-  #   build: 
-  #     context: ./nginx
-  #     dockerfile: Dockerfile
-  #   container_name: nginx
-  #   image: "sleepinglotus/nginx"
-  #   volumes: 
-  #     - /var/digital_crusaider:/var/digital_crusaider
-  #   ports:
-  #     - "80:80"
-  server:
+  chat:
+    depends_on:
+      - server
+    hostname: nginx
+    build: 
+      dockerfile: Dockerfile
+      context: ./chat-app
+    container_name: chat-app
+    
+    ports:
+      - "3001:3000"
+  api:
     container_name: api
     build: 
         context: ./server
         dockerfile: Dockerfile.dev
     depends_on: 
         - db
-    ports: 
-        - 3030:3000
+    # ports: 
+    #     - 3030:3000
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin

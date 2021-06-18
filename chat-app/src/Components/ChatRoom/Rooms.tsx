@@ -6,20 +6,31 @@ import { SearchField } from "./SearchField"
 
 export const Rooms = ({setCurrentRoomId}) => {
     const [rooms, setRooms] = useState([]as IRoom[])
+    const [filteredRooms, setFilteredRooms] = useState([]as IRoom[])
+    const [search, setSearch] = useState('')
     useEffect(() => {
        getRooms().then(response =>{
            const rooms =  response.data
            setRooms(rooms)
+           setFilteredRooms(filteredRooms)
        }) 
     }, [])
+    useEffect(() =>{
+        // console.log(search);
+        
+            const result = rooms.filter((room)=>room.name.includes(search.toLowerCase()))
+            // console.log('result',result);
+            setFilteredRooms(result)
+      
 
+    },[search,rooms])
     const RenderRooms = () => {
-        console.log(rooms);
+        // console.log('rooms',filteredRooms);
         
         return (
             <>
-            {rooms.map(room =>{
-                return <Room {...room} key={room.id}/>    
+            {filteredRooms.map(room =>{
+                return <Room setCurrentRoom={setCurrentRoomId} {...room} key={room.id}/>    
             })}
             </>
         )
@@ -31,7 +42,7 @@ export const Rooms = ({setCurrentRoomId}) => {
                 <div className="recent_heading">
                     <h4>Recent</h4>
                 </div>
-                <SearchField />
+                <SearchField setSearch={setSearch} search={search} />
 
             </div>
 

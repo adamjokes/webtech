@@ -1,6 +1,6 @@
-export const Room = ({ name, image, id, created_at }) => {
+export const Room = ({ name, image, id, created_at, setCurrentRoom }) => {
     return (
-        <div className="chat_list active_chat">
+        <div onClick={()=>setCurrentRoom(id)}  style={{cursor:'pointer'}}className="chat_list active_chat">
             <div id='conversation' className="chat_people ">
                 {/* <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div> */}
                 <div className="chat_ib">

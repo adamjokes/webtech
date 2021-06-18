@@ -28,8 +28,9 @@ export const CurrentRoomConversation = ({roomId})=>{
 
     const handleCreateMessage = async ()=>{
         try {
-           const result =  createMessage({ip_address:ip_address as string,input:message as string, room:roomId})
+           const result =  await createMessage({ip_address:ip_address as string,input:message as string, room:roomId})
             handleMessages()
+            // setMessages([...messages,result.])
            setMessage(null)
         } catch (error) {
             console.log(error);

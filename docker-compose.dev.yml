@@ -1,17 +1,30 @@
 version: "3.3"
 services:
+  # chat:
+  #   depends_on:
+  #     - server
+  #   hostname: nginx
+  #   build: 
+  #     dockerfile: Dockerfile
+  #     context: ./chat-app
+  #   container_name: chat-app
+    
+  #   ports:
+  #     - "3001:3000"
   api:
     container_name: api
     image: "sleepinglotus/webtech-api"
-    depends_on:
+    build: 
+        context: ./server
+        dockerfile: Dockerfile.dev
+    depends_on: 
         - db
-    ports:
+    ports: 
         - 3030:3000
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin
     restart: always
-    hostname: digitalcrusader.club
     ports:
       - 8080:80
     depends_on:
@@ -21,9 +34,11 @@ services:
        PMA_HOST: db
        PMA_ARBITRARY: 1
        PMA_PORT: 3306
-       PMA_ABSOLUTE_URI: https://digitalcrusader.club/phpmyadmin/
+      #  PMA_ABSOLUTE_URI: https://digitalcrusader.club/phpmyadmin/
   db:
     image: mariadb:10.3
+    ports:
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: webtech123
       MYSQL_DATABASE: dev_profile

@@ -4,6 +4,7 @@ import { RoomsModule } from './rooms/rooms.module';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { Room } from './rooms/entities/room.entity';
 import { Message } from './chats/entities/message.entity';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ import { Message } from './chats/entities/message.entity';
       synchronize: true,
     })
     
-    ,ChatsModule, RoomsModule],
+    ,ChatsModule, RoomsModule, AuthModule],
   controllers: [],
   providers: [],
 })

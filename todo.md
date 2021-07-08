@@ -1,4 +1,5 @@
-- create auth endpoint for generating jwt token
+- create auth endpoint for generating jwt token done
 - validate chat endpoint for authentication
 - add home page for tasks showcases
+- create open api endpoint
 - showcase table for the api endpoints (possibly a server to show all the available endpoints)

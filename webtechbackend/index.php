@@ -5,11 +5,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 require 'api/db.php';
 $app = new \Slim\App;
-$log = $app->log;
 
-$app = new Slim(array(
-    'log.enabled' => true
-));
+$container['logger'] = function ($c) {
+    $settings = $c->get('settings')['logger'];
+    $logger = new \Monolog\Logger('test-app');
+    $logger->pushHandler(new Monolog\Handler\StreamHandler('php://stdout', \Monolog\Logger::DEBUG));
+    return $logger;
+};
 
 $app->get('/', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Hello there from root");
@@ -18,13 +20,14 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 $app->get('/api', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Hello there from restful api");
+    $this->get('logger')->info("Slim-Skeleton '/' route");
     return $response;
 });
 
 //API GET Picture
 $app->get('/api/picture', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("get all user");
-    return $response;
+    // $response->getBody()->write("get all user");
+    // return $response;
 
     $sql = "SELECT * FROM picture";
 
@@ -33,6 +36,7 @@ $app->get('/api/picture', function (Request $request, Response $response, array 
         $db = new db();
         // Connect
         $db = $db->connect();
+
         $stmt = $db->query($sql);
         $user = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
@@ -41,6 +45,7 @@ $app->get('/api/picture', function (Request $request, Response $response, array 
         $data = array(
             "status" => "fail"
         );
+        $this->get('logger')->info("Slim-Skeleton '/' route");
         echo json_encode($data);
     }
 });

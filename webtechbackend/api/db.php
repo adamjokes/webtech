@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE");
         // Properties
         private $host = 'localhost';
         private $user = 'root';
-        private $password = '';
+        private $password = 'webtech123';
         private $dbname = 'webtechbackendDB';
 
         // Connect

@@ -1,0 +1,34 @@
+version: "3.3"
+services:
+  api:
+    container_name: api
+    image: "sleepinglotus/webtech-api"
+    depends_on:
+        - db
+    ports:
+        - 3030:3000
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    hostname: digitalcrusader.club
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+       MYSQL_ROOT_PASSWORD: webtech123
+       PMA_HOST: db
+       PMA_ARBITRARY: 1
+       PMA_PORT: 3306
+       PMA_ABSOLUTE_URI: https://digitalcrusader.club/phpmyadmin/
+  db:
+    image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: webtech123
+      MYSQL_DATABASE: dev_profile
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - app-db-data:/var/lib/mysql
+volumes:
+  app-db-data:

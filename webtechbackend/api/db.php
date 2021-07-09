@@ -2,6 +2,8 @@
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE");
 
+$log = $app->log;
+
     class db{
         // Properties
         private $host = 'localhost';
@@ -17,4 +19,5 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE");
             return $dbConnection;
         }
     }
+
 ?>
